@@ -51,6 +51,10 @@ async def ping(e):
     else:
         await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
 
+@client.on(events.NewMessage(incoming=True, pattern=r"\.restart"))    
+async def restart(e):
+    await e.reply("**Bot Is Restarting...\n\nMade with ❤️ By @InducedBots**")
+    os.execl(sys.executable, sys.executable, "-m", "main")
 """
 @client.on(events.NewMessage(incoming=True,pattern="?/approveall",))
 async def approvealll(event):
