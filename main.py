@@ -8,8 +8,9 @@ API_HASH = "84355e09d8775921504c93016e1e9438"
 BOT_TOKEN = "5170782972:AAFba1KKvu7DzcX_4utjQqzRVidmurFMCbE"
 OWNERS=[1854668908, 1303790979, 1322941082, 5217968098]
 client = telethon.TelegramClient(None, api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
+client.send_message("@InducedSpam","Hlo Everyone I am back Online\n\nCommand:\n\n`.start` to Start Adding`.check <order_id> <api_token>`\n\n`.ping` to Check Ping\n`.restart` to Restart Bot\n\nMade with ❤️ By @InducedBots")
 
-@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.adding"))
+@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.start"))
 async def _(e):
     if e.sender_id in OWNERS:
         TOK=(db.reference(f"/Members/Tok/")).get()
@@ -49,6 +50,21 @@ async def restart(e):
     await e.reply("**Bot Is Restarting...\n\nMade with ❤️ By @InducedBots**")
     os.execl(sys.executable, sys.executable, "-m", "main")
 
+@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.check"))
+async def _(e):
+    if e.sender_id in OWNERS:
+        isha = e.text.split(" ")
+        if len(isha) ==2:
+            get_ip= requests.get(f"https://telesubs.com/api/v2?key={isha[1]}apikey&action=status&order={isha[0]}")
+            red = json.loads(get_ip.text)
+            try:
+                await e.reply(f"*✳Info Extracted*\n---------\n📦Order Status : {red['status']}\n🧾Remains : {red['remains']}\n\nMade with ❤️ By @InducedBots")
+            except:
+                await e.reply("You may put wrong Id's or Wromg Method\nCommand:\n\n`.check <order_id> <api_token>`\n\nMade with ❤️ By @InducedBots")
+        else:
+            await e.reply("𝗠𝗼𝗱𝘂𝗹𝗲 𝗡𝗮𝗺𝗲 = Check\nCommand:\n\n`.check <order_id> <api_token>`\n\nMade with ❤️ By @InducedBots")
+    else:
+        await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
 print("""
 ╔════╗
 ╚═╗╔═╝
