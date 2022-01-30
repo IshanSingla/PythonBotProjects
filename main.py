@@ -1,3 +1,4 @@
+from datetime import datetime
 import json, firebase_admin, sys,telethon,asyncio,requests
 from tokenize import Token
 from telethon import *
@@ -17,6 +18,7 @@ client = telethon.TelegramClient("cli", api_id=APP_ID , api_hash=API_HASH).start
 
 @client.on(events.NewMessage(incoming=True, pattern=r"\.adding"))
 async def _(e):
+    if e.sender_id in OWNERS:
         TOK=(db.reference(f"/Members/Tok/")).get()
         LINK=(db.reference(f"/Members/Link/")).get()
         await e.reply(f"Adding Start")
@@ -34,6 +36,20 @@ async def _(e):
                     else:
                         await e.reply(f"Order ID:  `{red['order']}`\nOrder Link: `{i}`\nOrder Token: `{x}`\n\nMade with ❤️ By @InducedBots")
             await asyncio.sleep(5)
+    else:
+        await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
+
+@client.on(events.NewMessage(incoming=True, pattern=r"\.ping"))
+async def ping(e):
+    if e.sender_id in OWNERS:
+        start = datetime.now()
+        text = "Pong! \nBy Induced"
+        event = await e.reply(text, parse_mode=None, link_preview=None )
+        end = datetime.now()
+        ms = (end-start).microseconds / 1000
+        await event.edit(f"(●'◡'●) 𝗣𝗼𝗻𝗴!\n`{ms}` 𝗺𝘀 \n\nMade with ❤️ By @InducedBots")
+    else:
+        await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
 
 """
 @client.on(events.NewMessage(incoming=True,pattern="?/approveall",))
