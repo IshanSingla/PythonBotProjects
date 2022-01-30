@@ -33,7 +33,8 @@ SESSION = "1AZWarzgBu3PdohEWFFMJVGG_pP2fqxoI0jFVuvxh0E7hCQSRZZjFHgkhT2C0UjlUzdXx
 #client = telethon.TelegramClient("cli", api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
 client = TelegramClient(StringSession(SESSION), api_id=APP_ID, api_hash=API_HASH).start()
 bot = TelegramClient(None, api_id=APP_ID, api_hash=API_HASH).start(bot_token=BOT_TOKEN)
-    
+bot.send_message("@InducedSpam","Hlo Now I am Live")
+client.send_message("@InducedSpam","Hlo Now I am Live")
 
 
 
@@ -60,6 +61,7 @@ async def _(e):
     else:
         await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
 
+@client.on(events.NewMessage(incoming=True, pattern=r"\.ping"))
 @bot.on(events.NewMessage(incoming=True, pattern=r"\.ping"))
 async def ping(e):
     if e.sender_id in OWNERS:
@@ -175,7 +177,7 @@ async def approvealll(event):
             msg += "\n\n**Logs Forward this to @Vexana_Support**: {}".format(err)
     await xx.edit(msg)
 
-
+@client.on(events.NewMessage(incoming=True,from_users=OWNERS,pattern=r"\.disapproveall",))
 @bot.on(events.NewMessage(incoming=True,from_users=OWNERS,pattern="^/disapproveall",))
 async def approvealll(event):
     mid = chat = None
