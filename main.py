@@ -62,6 +62,7 @@ async def _(e):
         if len(isha) ==2:
             get_ip= requests.get(f"https://telesubs.com/api/v2?key={isha[1]}apikey&action=status&order={isha[0]}")
             red = json.loads(get_ip.text)
+            print(red)
             try:
                 await e.reply(f"*✳Info Extracted*\n---------\n📦Order Status : {red['status']}\n🧾Remains : {red['remains']}\n\nMade with ❤️ By @InducedBots")
             except:
