@@ -64,7 +64,7 @@ async def _(e):
             red = json.loads(get_ip.text)
             print(red)
             try:
-                await e.reply(f"*✳Info Extracted*\n---------\n📦Order Status : {red['status']}\n🧾Remains : {red['remains']}\n\nMade with ❤️ By @InducedBots")
+                await e.reply(f"**Info Extracted**\n---------\n📦Order Status : {red['status']}\n🧾Remains : {red['remains']}\n\n**Made with ❤️ By @InducedBots**")
             except:
                 await e.reply("You may put wrong Id's or Wromg Method\nCommand:\n\n`.check <order_id> <api_token>`\n\nMade with ❤️ By @InducedBots")
         else:
