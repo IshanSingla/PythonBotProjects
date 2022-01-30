@@ -2,8 +2,6 @@ from datetime import datetime
 import json, firebase_admin, sys,telethon,asyncio,requests
 from tokenize import Token
 from telethon import *
-import logging
-import os
 from asyncio import sleep
 
 from telethon import functions, types
@@ -12,11 +10,6 @@ from telethon.sessions import StringSession
 from telethon.errors.rpcerrorlist import ChatAdminRequiredError
 from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins, ChatAdminRights
 from telethon.tl.functions.channels import EditBannedRequest
-from decouple import config
-
-import logging
-import os
-from asyncio import sleep
 
 from telethon import TelegramClient, events, Button
 from telethon.sessions import StringSession
