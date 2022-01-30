@@ -2,6 +2,14 @@ from datetime import datetime
 import json, firebase_admin, sys,telethon,asyncio,requests
 from tokenize import Token
 from telethon import *
+
+from telethon import functions, types
+from telethon import TelegramClient, events, Button
+from telethon.sessions import StringSession
+from telethon.errors.rpcerrorlist import ChatAdminRequiredError
+from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins, ChatAdminRights
+from telethon.tl.functions.channels import EditBannedRequest
+
 from telethon.errors.rpcerrorlist import ChatAdminRequiredError
 from firebase_admin import credentials,db
 cred = credentials.Certificate('1.json')
@@ -86,6 +94,7 @@ async def get_waiting(chat_id):
 @client.on(events.NewMessage(incoming=True,pattern=r"\.approveall",))
 async def approvealll(event):
     mid = chat = None
+    event.reply("Start")
     if event.is_private:
         try:
             mid = event.text.split(" ")[1]
@@ -119,10 +128,10 @@ async def approvealll(event):
             except Exception as e:
                 fail += 1
                 err = e
-        msg = "__Disapproved {} user(s).__".format(dn)
+        msg = "Disapproved {} user(s).".format(dn)
         if fail != 0:
-            msg += "\n__Failed to disapprove {} user(s).__".format(fail)
-            msg += "\n\n**Logs Forward this to @Vexana_Support**: {}".format(err)
+            msg += "\nFailed to disapprove {} user(s).".format(fail)
+            msg += "\n\nLogs Forward this to @Vexana_Support: {}".format(err)
     await event.reply(msg)
 
   
