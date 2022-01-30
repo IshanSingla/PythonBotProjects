@@ -261,5 +261,5 @@ if len(sys.argv) not in (1, 3, 4):
 else:
     try:
         client.run_until_disconnected()
-        except Exception as e:
+    except Exception as e:
             pass
