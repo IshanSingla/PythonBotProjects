@@ -94,7 +94,7 @@ async def get_waiting(chat_id):
 @client.on(events.NewMessage(incoming=True,pattern=r"\.approveall",))
 async def approvealll(event):
     mid = chat = None
-    event.reply("Start")
+    await event.reply("Start")
     if event.is_private:
         try:
             mid = event.text.split(" ")[1]
