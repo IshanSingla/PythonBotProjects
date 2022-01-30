@@ -18,8 +18,6 @@ import logging
 import os
 from asyncio import sleep
 
-from decouple import config
-
 from telethon import TelegramClient, events, Button
 from telethon.sessions import StringSession
 from telethon.errors.rpcerrorlist import ChatAdminRequiredError
