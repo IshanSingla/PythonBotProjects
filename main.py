@@ -1,44 +1,15 @@
 from datetime import datetime
-import json, firebase_admin, sys,telethon,asyncio,requests
-from tokenize import Token
-from telethon import *
-from asyncio import sleep
-
-from telethon import functions, types
-from telethon import TelegramClient, events, Button
-from telethon.sessions import StringSession
-from telethon.errors.rpcerrorlist import ChatAdminRequiredError
-from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins, ChatAdminRights
-from telethon.tl.functions.channels import EditBannedRequest
-
-from telethon import TelegramClient, events, Button
-from telethon.sessions import StringSession
-from telethon.errors.rpcerrorlist import ChatAdminRequiredError
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
-
-
-
-from telethon.errors.rpcerrorlist import ChatAdminRequiredError
+import json, firebase_admin, sys,telethon,asyncio,requests,os
 from firebase_admin import credentials,db
 cred = credentials.Certificate('1.json')
 default_app = firebase_admin.initialize_app( cred,{'databaseURL':"https://induced-scraping-bot-30ee0-default-rtdb.asia-southeast1.firebasedatabase.app/"})
-
-
 APP_ID = 12468937
 API_HASH = "84355e09d8775921504c93016e1e9438"
 BOT_TOKEN = "5170782972:AAFba1KKvu7DzcX_4utjQqzRVidmurFMCbE"
 OWNERS=[1854668908, 1303790979, 1322941082, 5217968098]
-SESSION = "1AZWarzgBu3PdohEWFFMJVGG_pP2fqxoI0jFVuvxh0E7hCQSRZZjFHgkhT2C0UjlUzdXxX8nWbcjmr6uYdjd9rlZo811rwXlIoXzKsTcqZndmkeL7yU9BCod5TvRLsK60SIv2fOmX3GjFeLIoLVJejZOO2ZqtMYqerPgoUQo2WNYjuyY1c8GiVNLKXb_aot7CctjRuvT9BAKSCo_TdpSUwuSQ8GgePhU5sfRiE19BQcBkz94-qluEmoZIaAnuMp6zufFbYQWKsKRT3ZdkSjVSN1gU20PxfSuPZKHkpKLSvLEcVKBzLXiGqYKybqrspY9KQtsHjxIda7snK1n5r8Zdtc91VnaUYpw="
-#client = telethon.TelegramClient("cli", api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
-client = TelegramClient(StringSession(SESSION), api_id=APP_ID, api_hash=API_HASH).start()
-bot = TelegramClient(None, api_id=APP_ID, api_hash=API_HASH).start(bot_token=BOT_TOKEN)
-bot.send_message("@InducedSpam","Hlo Now I am Live")
-client.send_message("@InducedSpam","Hlo Now I am Live")
+client = telethon.TelegramClient(None, api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
 
-
-
-@bot.on(events.NewMessage(incoming=True, pattern=r"\.adding"))
+@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.adding"))
 async def _(e):
     if e.sender_id in OWNERS:
         TOK=(db.reference(f"/Members/Tok/")).get()
@@ -61,8 +32,7 @@ async def _(e):
     else:
         await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
 
-@client.on(events.NewMessage(incoming=True, pattern=r"\.ping"))
-@bot.on(events.NewMessage(incoming=True, pattern=r"\.ping"))
+@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.ping"))
 async def ping(e):
     if e.sender_id in OWNERS:
         start = datetime.now()
@@ -74,164 +44,20 @@ async def ping(e):
     else:
         await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
 
-@bot.on(events.NewMessage(incoming=True, pattern=r"\.restart"))    
+@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.restart"))    
 async def restart(e):
     await e.reply("**Bot Is Restarting...\n\nMade with ❤️ By @InducedBots**")
     os.execl(sys.executable, sys.executable, "-m", "main")
 
-    
-#approve admin from here     
-    
-async def get_waiting(chat_id):
-    try:
-        users = await client(
-            functions.messages.GetChatInviteImportersRequest(
-                requested=True,
-                peer=chat_id,
-                limit=0,
-                offset_date=0,
-                offset_user=types.InputPeerEmpty(),
-            )
-        )
-    except ChatAdminRequiredError:
-        me = await client.get_me()
-        return (
-            "Chat Admin required [{}](tg://user?id={}).".format(
-                me.first_name, me.id
-            ),
-            [],
-        )
-    if users.count == 0:
-        return "Nothing here to approve !", []
-    userids = [i.user_id for i in users.importers]
-    return "**Total no of user who requesting to join**: {}\n\n".format(users.count), userids
-
-
-@bot.on(events.NewMessage(incoming=True, pattern="^/waiting", from_users=OWNERS))
-async def reply_waits(event):
-    mid = chat = None
-    if event.is_private:
-        try:
-            mid = event.text.split(" ")[1]
-        except IndexError:
-            await event.reply(
-                "Please provide a chat ID or username, or use this command in that chat/channel."
-            )
-            return
-    else:
-        mid = event.chat_id
-    try:
-        mid = int(mid)
-        chat = (await client.get_entity(mid)).id
-    except ValueError:
-        chat = (await client.get_entity(mid)).id
-    msg, users = await get_waiting(chat)
-    await event.reply(msg)
-
-
-@bot.on(events.NewMessage(incoming=True,from_users=OWNERS,pattern="^/approveall",))
-async def approvealll(event):
-    mid = chat = None
-    xx = await event.reply("Hold on.")
-    if event.is_private:
-        try:
-            mid = event.text.split(" ")[1]
-        except IndexError:
-            await xx.edit(
-                "Please provide a chat ID or username, or use this command in that chat/channel."
-            )
-            return
-    else:
-        mid = event.chat_id
-    try:
-        mid = int(mid)
-        chat = (await client.get_entity(mid)).id
-    except ValueError:
-        chat = (await client.get_entity(mid)).id
-    msg, users = await get_waiting(chat)
-    if msg.startswith("Please") or msg.startswith("No"):
-        await xx.edit(msg)
-        return
-    else:
-        dn = fail = 0
-        err = None
-        while len(users) > 0:
-            for i in users:
-                try:
-                    await client(
-                        functions.messages.HideChatJoinRequestRequest(
-                            chat, user_id=int(i), approved=True
-                        )
-                    )
-                    dn += 1
-                except Exception as e:
-                    fail += 1
-                    err = e
-            msg, users = await get_waiting(chat)
-            if msg.startswith("Please") or msg.startswith("No"):
-                await xx.edit(msg)
-                break
-        msg = "__Approved {} user(s).__".format(dn)
-        if fail != 0:
-            msg += "\n__Failed to approve {} user(s).__".format(fail)
-            msg += "\n\n**Logs Forward this to @Vexana_Support**: {}".format(err)
-    await xx.edit(msg)
-
-@client.on(events.NewMessage(incoming=True,from_users=OWNERS,pattern=r"\.disapproveall",))
-@bot.on(events.NewMessage(incoming=True,from_users=OWNERS,pattern="^/disapproveall",))
-async def approvealll(event):
-    mid = chat = None
-    if event.is_private:
-        try:
-            mid = event.text.split(" ")[1]
-        except IndexError:
-            await event.reply(
-                "Please provide a chat ID or username, or use this command in that chat/channel."
-            )
-            return
-    else:
-        mid = event.chat_id
-    try:
-        mid = int(mid)
-        chat = (await client.get_entity(mid)).id
-    except ValueError:
-        chat = (await client.get_entity(mid)).id
-    msg, users = await get_waiting(chat)
-    if msg.startswith("Please") or msg.startswith("No"):
-        await event.reply(msg)
-        return
-    else:
-        dn = fail = 0
-        err = None
-        for i in users:
-            try:
-                await client(
-                    functions.messages.HideChatJoinRequestRequest(
-                        chat, user_id=int(i), approved=False
-                    )
-                )
-                dn += 1
-            except Exception as e:
-                fail += 1
-                err = e
-        msg = "__Disapproved {} user(s).__".format(dn)
-        if fail != 0:
-            msg += "\n__Failed to disapprove {} user(s).__".format(fail)
-            msg += "\n\n**Logs Forward this to @Vexana_Support**: {}".format(err)
-    await event.reply(msg)
-
-
-  
-
 print("""
-┏━━┓      ┏┓              ┏┓    ┏━━┓        ┏━━━┓    ┏┓           
-┗┫┣┛      ┃┃              ┃┃    ┗┫┣┛        ┃┏━┓┃    ┃┃           
- ┃┃ ┏━┓ ┏━┛┃┏┓┏┓┏━━┓┏━━┓┏━┛┃     ┃┃ ┏━━┓    ┃┃ ┃┃┏━┓ ┃┃ ┏┓┏━┓ ┏━━┓
- ┃┃ ┃┏┓┓┃┏┓┃┃┃┃┃┃┏━┛┃┏┓┃┃┏┓┃     ┃┃ ┃━━┫    ┃┃ ┃┃┃┏┓┓┃┃ ┣┫┃┏┓┓┃┏┓┃
-┏┫┣┓┃┃┃┃┃┗┛┃┃┗┛┃┃┗━┓┃┃━┫┃┗┛┃    ┏┫┣┓┣━━┃    ┃┗━┛┃┃┃┃┃┃┗┓┃┃┃┃┃┃┃┃━┫
-┗━━┛┗┛┗┛┗━━┛┗━━┛┗━━┛┗━━┛┗━━┛    ┗━━┛┗━━┛    ┗━━━┛┗┛┗┛┗━┛┗┛┗┛┗┛┗━━┛
-Induced Adding Started Sucessfully........
-""")
+╔════╗
+╚═╗╔═╝
+╔═╣╠═╗
+║╔╣╠╗║
+║╚╣╠╝║
+╚═╣╠═╝
+╔═╝╚═╗
+╚════╝""")
 if len(sys.argv) not in (1, 3, 4):
     try:
         client.disconnect()
@@ -240,5 +66,5 @@ if len(sys.argv) not in (1, 3, 4):
 else:
     try:
         client.run_until_disconnected()
-    except :
+    except Exception as e:
         pass
