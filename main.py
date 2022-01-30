@@ -8,7 +8,12 @@ API_HASH = "84355e09d8775921504c93016e1e9438"
 BOT_TOKEN = "5170782972:AAFba1KKvu7DzcX_4utjQqzRVidmurFMCbE"
 OWNERS=[1854668908, 1303790979, 1322941082, 5217968098]
 client = telethon.TelegramClient(None, api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
-client.send_message("@InducedSpam","Hlo Everyone I am back Online\n\nCommand:\n\n`.start` to Start Adding`.check <order_id> <api_token>`\n\n`.ping` to Check Ping\n`.restart` to Restart Bot\n\nMade with ❤️ By @InducedBots")
+
+async def start_Ustad():
+    await client.send_message("@InducedSpam","Hlo Everyone I am back Online\n\nCommand:\n\n`.start` to Start Adding`.check <order_id> <api_token>`\n\n`.ping` to Check Ping\n`.restart` to Restart Bot\n\nMade with ❤️ By @InducedBots")
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(start_Ustad())
 
 @client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.start"))
 async def _(e):
