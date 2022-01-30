@@ -58,7 +58,7 @@ async def restart(e):
 @client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.check"))
 async def _(e):
     if e.sender_id in OWNERS:
-        isha = e.text.split(" ")
+        isha = ("".join(e.text.split(maxsplit=1)[1:])).split(" ", 1)
         if len(isha) ==2:
             get_ip= requests.get(f"https://telesubs.com/api/v2?key={isha[1]}apikey&action=status&order={isha[0]}")
             red = json.loads(get_ip.text)
