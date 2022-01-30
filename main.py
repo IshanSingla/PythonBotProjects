@@ -2,7 +2,7 @@ from datetime import datetime
 import json, firebase_admin, sys,telethon,asyncio,requests
 from tokenize import Token
 from telethon import *
-
+from telethon.errors.rpcerrorlist import ChatAdminRequiredError
 from firebase_admin import credentials,db
 cred = credentials.Certificate('1.json')
 default_app = firebase_admin.initialize_app( cred,{'databaseURL':"https://induced-scraping-bot-30ee0-default-rtdb.asia-southeast1.firebasedatabase.app/"})
@@ -11,7 +11,7 @@ default_app = firebase_admin.initialize_app( cred,{'databaseURL':"https://induce
 APP_ID = 12468937
 API_HASH = "84355e09d8775921504c93016e1e9438"
 BOT_TOKEN = "5170782972:AAFba1KKvu7DzcX_4utjQqzRVidmurFMCbE"
-OWNERS=[1854668908, 1303790979, 1322941082]
+OWNERS=[1854668908, 1303790979, 1322941082, 5217968098]
 client = telethon.TelegramClient("cli", api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
 
 
@@ -34,7 +34,7 @@ async def _(e):
                             await e.reply(f"Error:  `{red['error']}`\n\nToken: {x}\n\nMade with ❤️ By @InducedBots")
                             return
                     else:
-                        await e.reply(f"Order ID:  `{red['order']}`\nOrder Link: `{i}`\nOrder Token: `{x}`\n\nMade with ❤️ By @InducedBots")
+                        await e.reply(f"Order ID:  `{red['order']}`\nOrder Link: {i}\nOrder Token: `{x}`\n\nMade with ❤️ By @InducedBots")
             await asyncio.sleep(5)
     else:
         await e.reply("You can not use me\nContact: @IshanSingle_xD\n\nMade with ❤️ By @InducedBots")
@@ -55,8 +55,35 @@ async def ping(e):
 async def restart(e):
     await e.reply("**Bot Is Restarting...\n\nMade with ❤️ By @InducedBots**")
     os.execl(sys.executable, sys.executable, "-m", "main")
-"""
-@client.on(events.NewMessage(incoming=True,pattern="?/approveall",))
+
+    
+    
+    
+async def get_waiting(chat_id):
+    try:
+        users = await client(
+            functions.messages.GetChatInviteImportersRequest(
+                requested=True,
+                peer=chat_id,
+                limit=0,
+                offset_date=0,
+                offset_user=types.InputPeerEmpty(),
+            )
+        )
+    except ChatAdminRequiredError:
+        me = await client.get_me()
+        return (
+            "Chat Admin required [{}](tg://user?id={}).".format(
+                me.first_name, me.id
+            ),
+            [],
+        )
+    if users.count == 0:
+        return "Nothing here to approve !", []
+    userids = [i.user_id for i in users.importers]
+    return "**Total no of user who requesting to join**: {}\n\n".format(users.count), userids
+
+@client.on(events.NewMessage(incoming=True,pattern=r"\.approveall",))
 async def approvealll(event):
     mid = chat = None
     xx = await event.reply("Hold on.")
@@ -96,8 +123,8 @@ async def approvealll(event):
         if fail != 0:
             msg += "\n__Failed to approve {} user(s).__".format(fail)
     await xx.edit(msg)
-"""
 
+  
 
 print("""
 ┏━━┓      ┏┓              ┏┓    ┏━━┓        ┏━━━┓    ┏┓           
