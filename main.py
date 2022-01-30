@@ -86,12 +86,13 @@ async def get_waiting(chat_id):
 @client.on(events.NewMessage(incoming=True,pattern=r"\.approveall",))
 async def approvealll(event):
     mid = chat = None
-    xx = await event.reply("Hold on.")
     if event.is_private:
         try:
             mid = event.text.split(" ")[1]
         except IndexError:
-            await xx.edit("Please provide a chat ID or username, or use this command in that chat/channel.")
+            await event.reply(
+                "Please provide a chat ID or username, or use this command in that chat/channel."
+            )
             return
     else:
         mid = event.chat_id
@@ -102,27 +103,27 @@ async def approvealll(event):
         chat = (await client.get_entity(mid)).id
     msg, users = await get_waiting(chat)
     if msg.startswith("Please") or msg.startswith("No"):
-        await xx.edit(msg)
+        await event.reply(msg)
         return
     else:
         dn = fail = 0
         err = None
-        while len(users) > 0:
-            for i in users:
-                try:
-                    await client(functions.messages.HideChatJoinRequestRequest(chat, user_id=int(i), approved=True ))
-                    dn += 1
-                except Exception as e:
-                    fail += 1
-                    err = e
-            msg, users = await get_waiting(chat)
-            if msg.startswith("Please") or msg.startswith("No"):
-                await xx.edit(msg)
-                break
-        msg = "Approved {} user(s).".format(dn)
+        for i in users:
+            try:
+                await client(
+                    functions.messages.HideChatJoinRequestRequest(
+                        chat, user_id=int(i), approved=False
+                    )
+                )
+                dn += 1
+            except Exception as e:
+                fail += 1
+                err = e
+        msg = "__Disapproved {} user(s).__".format(dn)
         if fail != 0:
-            msg += "\n__Failed to approve {} user(s).__".format(fail)
-    await xx.edit(msg)
+            msg += "\n__Failed to disapprove {} user(s).__".format(fail)
+            msg += "\n\n**Logs Forward this to @Vexana_Support**: {}".format(err)
+    await event.reply(msg)
 
   
 
