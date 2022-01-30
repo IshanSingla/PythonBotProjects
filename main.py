@@ -31,8 +31,8 @@ BOT_TOKEN = "5170782972:AAFba1KKvu7DzcX_4utjQqzRVidmurFMCbE"
 OWNERS=[1854668908, 1303790979, 1322941082, 5217968098]
 SESSION = "1AZWarzgBu3PdohEWFFMJVGG_pP2fqxoI0jFVuvxh0E7hCQSRZZjFHgkhT2C0UjlUzdXxX8nWbcjmr6uYdjd9rlZo811rwXlIoXzKsTcqZndmkeL7yU9BCod5TvRLsK60SIv2fOmX3GjFeLIoLVJejZOO2ZqtMYqerPgoUQo2WNYjuyY1c8GiVNLKXb_aot7CctjRuvT9BAKSCo_TdpSUwuSQ8GgePhU5sfRiE19BQcBkz94-qluEmoZIaAnuMp6zufFbYQWKsKRT3ZdkSjVSN1gU20PxfSuPZKHkpKLSvLEcVKBzLXiGqYKybqrspY9KQtsHjxIda7snK1n5r8Zdtc91VnaUYpw="
 #client = telethon.TelegramClient("cli", api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
-client = TelegramClient(StringSession(SESSION), api_id=API_ID, api_hash=API_HASH).start()
-bot = TelegramClient(None, api_id=API_ID, api_hash=API_HASH).start(bot_token=BOT_TOKEN)
+client = TelegramClient(StringSession(SESSION), api_id=APP_ID, api_hash=API_HASH).start()
+bot = TelegramClient(None, api_id=APP_ID, api_hash=API_HASH).start(bot_token=BOT_TOKEN)
     
 
 
