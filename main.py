@@ -10,7 +10,7 @@ OWNERS=[1854668908, 1303790979, 1322941082, 5217968098]
 client = telethon.TelegramClient(None, api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
 
 async def start_Ustad():
-    await client.send_message("@InducedSpam","Hlo Everyone I am back Online\n\nCommand:\n\n`.start` to Start Adding`.check <order_id> <api_token>`\n\n`.ping` to Check Ping\n`.restart` to Restart Bot\n\nMade with ❤️ By @InducedBots")
+    await client.send_message("@InducedSpam","Hlo Everyone I am back Online\n\nCommand:\n\n`.start` to Start Adding\n`.check <order_id> <api_token>`\n`.ping` to Check Ping\n`.restart` to Restart Bot\n\nMade with ❤️ By @InducedBots")
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(start_Ustad())
