@@ -63,7 +63,7 @@ async def _(e):
             get_ip= requests.get(f"https://telesubs.com/api/v2?key={isha[1]}&action=status&order={isha[0]}")
             red = json.loads(get_ip.text)
             try:
-                await e.reply(f"**Info Extracted**\n---------\n📦Order Status : {red['status']}\n🧾Remains : {red['remains']}\n\n**Made with ❤️ By @InducedBots**")
+                await e.reply(f"**Info Extracted**\n---------\n📦Order Status : {red['status']}\n☑️Start From: {red['start_count']}\n🧾Remains : {red['remains']}\n🤑Price: {red['charge']}USD\n\n**Made with ❤️ By @InducedBots**")
             except:
                 await e.reply("You may put wrong Id's or Wromg Method\nCommand:\n\n`.check <order_id> <api_token>`\n\nMade with ❤️ By @InducedBots")
         else:
