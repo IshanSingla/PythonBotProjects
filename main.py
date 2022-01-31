@@ -24,7 +24,7 @@ async def _(e):
         while True:
             for x in TOK:
                 for i in LINK:
-                    get_ip= requests.get(f"https://telesubs.com/api/v2?key={x}&action=add&service=56&link={i}&quantity=650")
+                    get_ip= requests.get(f"https://telesubs.com/api/v2?key={x}&action=add&service=56&link={i}&quantity=500")
                     red = json.loads(get_ip.text)
                     if 'error' in red:
                         if red['error']=="You have active order with this link. Please wait until order being completed.":
