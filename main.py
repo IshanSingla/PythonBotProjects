@@ -24,7 +24,7 @@ async def _(e):
         while True:
             for x in TOK:
                 for i in LINK:
-                    get_ip= requests.get(f"https://telesubs.com/api/v2?key={x}&action=add&service=56&link={i}&quantity=500")
+                    get_ip= requests.get(f"https://telesubs.com/api/v2?key={x}&action=add&service=56&link={i}&quantity=650")
                     red = json.loads(get_ip.text)
                     if 'error' in red:
                         if red['error']=="You have active order with this link. Please wait until order being completed.":
@@ -54,7 +54,25 @@ async def ping(e):
 async def restart(e):
     await e.reply("**Bot Is Restarting...\n\nMade with ❤️ By @InducedBots**")
     os.execl(sys.executable, sys.executable, "-m", "main")
-
+    
+@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.check"))
+async def _(e):
+    if e.sender_id in OWNERS:
+        TOK=(db.reference(f"/Members/Tok/")).get()
+        for x in TOK:
+            get_ip= requests.get(f"https://telesubs.com/api/v2?key={x}&action=balance")
+            red = json.loads(get_ip.text)
+            if 'error' in red:
+                        if red['error']=="You have active order with this link. Please wait until order being completed.":
+                            pass
+                        else:
+                            await e.reply(f"Error:  `{red['error']}`\n\nToken: {x}\n\nMade with ❤️ By @InducedBots")
+                           
+            elif 'balance' in red:
+                await e.reply(f"**Info Extracted**\n---------\n📦Balance: {red['balance']}USD\n🧾Token : {x}\n\n**Made with ❤️ By @InducedBots**")
+            else:
+                await e.reply(get_ip.text)
+    
 @client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.check"))
 async def _(e):
     if e.sender_id in OWNERS:
