@@ -55,7 +55,7 @@ async def restart(e):
     await e.reply("**Bot Is Restarting...\n\nMade with ❤️ By @InducedBots**")
     os.execl(sys.executable, sys.executable, "-m", "main")
     
-@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.check"))
+@client.on(telethon.events.NewMessage(incoming=True, pattern=r"\.balance"))
 async def _(e):
     if e.sender_id in OWNERS:
         TOK=(db.reference(f"/Members/Tok/")).get()
