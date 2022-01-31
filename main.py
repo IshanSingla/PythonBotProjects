@@ -24,10 +24,13 @@ async def _(e):
         while True:
             for x in TOK:
                 for i in LINK:
-                    get_ip= requests.get(f"https://telesubs.com/api/v2?key={x}&action=add&service=56&link={i}&quantity=500")
+                    f = requests.Session()
+                    get_ip=f.post("https://telesubs.com/api/v2", json=({"key": x, "action": "add", "service": 56, "link": i, "quantity":500}))
                     red = json.loads(get_ip.text)
                     if 'error' in red:
                         if red['error']=="You have active order with this link. Please wait until order being completed.":
+                            pass
+                        elif red['error']=="Not enough funds on balance":
                             pass
                         else:
                             await e.reply(f"Error:  `{red['error']}`\n\nToken: {x}\n\nMade with ❤️ By @InducedBots")
