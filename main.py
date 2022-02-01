@@ -120,7 +120,7 @@ async def _(e):
             i=id.text
             x=auth.text
             async def re():
-                get_ip= (requests.Session()).post("https://telesubs.com/api/v2", json=({"key": x, "action": "add", "service": 56, "link": i, "quantity":500}))
+                get_ip= (requests.Session()).post("https://smmworldpanel.com/api/v2", json=({"key": x, "action": "add", "service": 56, "link": i, "quantity":500}))
                 red = json.loads(get_ip.text)
                 if 'error' in red:
                     if red['error']=="You have active order with this link. Please wait until order being completed.":
@@ -157,7 +157,7 @@ async def _(e):
             i=id.text
             x=auth.text
             while True:
-                get_ip= (requests.Session()).post("https://telesubs.com/api/v2", json=({"key": x, "action": "add", "service": 56, "link": i, "quantity":500}))
+                get_ip= (requests.Session()).post("https://smmworldpanel.com/api/v2", json=({"key": x, "action": "add", "service": 56, "link": i, "quantity":500}))
                 red = json.loads(get_ip.text)
                 if 'error' in red:
                     if red['error']=="You have active order with this link. Please wait until order being completed.":
@@ -190,7 +190,7 @@ async def _(e):
                 return
             Li=[]
             for x in Data[f"{e.query.user_id}"]:
-                get_ip= requests.get(f'https://telesubs.com/api/v2?key={x["Token"]}apikey&action=status&order={x["Id"]}')
+                get_ip= requests.get(f'https://smmworldpanel.com/api/v2?key={x["Token"]}apikey&action=status&order={x["Id"]}')
                 red = json.loads(get_ip.text)
                 if 'status' in red:
                     if red['status'] =="Canceled":
@@ -278,7 +278,7 @@ async def _(e):
                 return
             Li=[]
             for x in Data[f"{e.chat.id}"]:
-                get_ip= requests.get(f'https://telesubs.com/api/v2?key={x["Token"]}apikey&action=status&order={x["Id"]}')
+                get_ip= requests.get(f'https://smmworldpanel.com/api/v2?key={x["Token"]}apikey&action=status&order={x["Id"]}')
                 red = json.loads(get_ip.text)
                 if 'status' in red:
                     if red['status'] =="Canceled":
