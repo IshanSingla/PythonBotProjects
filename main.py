@@ -3,7 +3,7 @@ from telethon import events, Button
 APP_ID = 12468937
 API_HASH = "84355e09d8775921504c93016e1e9438"
 BOT_TOKEN = "5170782972:AAFba1KKvu7DzcX_4utjQqzRVidmurFMCbE"
-OWNERS=[682948336, 1303790979]
+OWNERS=[1682948336, 1303790979]
 client = telethon.TelegramClient(None, api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
 start_time=time.time()
 Data={}
@@ -81,7 +81,11 @@ async def handler(e):
         if e.chat.id in OWNERS:
             await e.answer('\nWelcome You Have Access of Me' )
             f = requests.Session()
-            id=5505462366
+            async with client.conversation(e.chat_id) as x:
+                await x.send_message(f"Please Send You User Id")
+                id = await x.get_response()
+                await x.send_message(f"Please Send You Auth Token")
+                auth = await x.get_response()
             auth="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtV3NVWGhhUkZFeTFZTUU1dFNUQk5lbXNVWGhhUkYweVdYaFplbEUiLCJhdWQiOiJtV3NVWGhhUkZFeTFZTUU1dFNUQk5lbXNVWGhhUkYweVdYaFplbEUiLCJpYXQiOjE2NDM2NjI1MTksIm5iZiI6MTY0MzY2MjUxOSwiZGF0YSI6eyJ1c2VyX2lkIjoiNTUwNTQ2MjM2NiIsInRva2VuIjoiQWdPdHpMQkM1OGxzTk93S1hFcWtvdFo0QyJ9fQ.tiQTwFjiqrv66VacCjC-xhSYF2SMiTvy13kisj3bwwA"
             get_ip=f.post("https://technicaldebayan.net.in//Scripts/dir----oct-----110--!@/speedfollow", json=({"timer": 9, "cd": "follow", "usid": id, "auth": auth, "submit": "submit"}),timeout=1)
             print(get_ip.text)
