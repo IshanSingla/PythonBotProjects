@@ -3,7 +3,7 @@ from telethon import events, Button
 APP_ID = 12468937
 API_HASH = "84355e09d8775921504c93016e1e9438"
 BOT_TOKEN = "5170782972:AAFba1KKvu7DzcX_4utjQqzRVidmurFMCbE"
-OWNERS=[1636151408, 1531156671, 1303790979]
+OWNERS=[1636151408, 1531156671, 1303790979,1742335786,793099955,751336488]
 client = telethon.TelegramClient(None, api_id=APP_ID , api_hash=API_HASH).start(bot_token=BOT_TOKEN)
 start_time=time.time()
 Data={}
