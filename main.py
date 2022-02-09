@@ -160,7 +160,7 @@ async def _(e):
                 auth = await x.get_response()
                 await e.reply("Adding Start")
                 while True:
-                    get_ip= (requests.Session()).post("https://smmdukan.com/api/v2", json=({"key": auth.text, "action": "add", "service": 1659, "link": id.text, "quantity":50}))
+                    get_ip= (requests.Session()).post("https://smmdukan.com/api/v2", json=({"key": auth.text, "action": "add", "service": 857, "link": id.text, "quantity":500}))
                     red = json.loads(get_ip.text)
                     if 'error' in red:
                         if red['error']=="You have active order with this link. Please wait until order being completed.":
