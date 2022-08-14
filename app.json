@@ -1,0 +1,40 @@
+{
+    "name": "Induced Forward Tag Remover",
+    "description": "A bot that can remove forward tag",
+    "logo": "https://wallpaperaccess.com/download/a-1476367",
+    "keywords": [
+        "Pyrogram",
+        "Tag",
+        "Telegram Bot",
+        "Alain"
+    ],
+    "website": "",
+    "repository": "https://github.com/IshanSingla/TgForwardTagRemover/",
+    "success_url": "https://telegram.dog/IshanSingla",
+    "env": {
+        "BOT_TOKEN": {
+            "description": "You Telegram Bot Token from @BotFather",
+            "value": ""
+        },
+        "API_HASH": {
+            "description": "Your API Hash from my.telegram.org",
+            "value": ""
+        },
+        "APP_ID": {
+            "description": "Your API ID from my.telegram.org",
+            "value": ""
+        }
+    },
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
+    }
+}
