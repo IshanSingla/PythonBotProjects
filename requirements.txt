@@ -1,0 +1,3 @@
+heroku3
+telethon
+psutil
