@@ -120,6 +120,6 @@ You are more than welcome to contribute and build your own cheat sheet for your 
 
 ## 👩‍💻👨‍💻 Our valuable Contributors
 
-<p align="center"><a href="https://github.com/IshanSingla/DevCheatSheet/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=IshanSingla/DevCheatSheet" />
+<p align="center"><a href="https://github.com/IshanSingla/PythonBotProjects/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=IshanSingla/PythonBotProjects" />
 </a></p>
