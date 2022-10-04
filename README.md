@@ -2,7 +2,7 @@
 
 ## 🤖 Bot List
 
-### 🛩TgForwardTagRemover
+### TgForwardTagRemover
 
 <details>
 <summary>View Summary</summary>
@@ -25,7 +25,7 @@
 
 </details>
 
-### 🏢GitHubComitChecker
+### GitHubComitChecker
 
 <details>
 <summary>View Summary</summary>
